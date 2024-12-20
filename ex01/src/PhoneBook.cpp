@@ -9,6 +9,18 @@ PhoneBook::~PhoneBook()
 {
 }
 
+void PhoneBook::showMenu()
+{
+	std::cout<<"\n\n";
+	std::cout << "\033[34mPHONEBOOK MENU" << std::endl;
+	std::cout << "--------------" << std::endl;
+	std::cout << " Commands " << std::endl;
+	std::cout << "* ADD\n";
+	std::cout << "* SEARCH\n";
+	std::cout << "* EXIT\n";
+	std::cout << "\nChoose one command :\033[0m ";
+}
+
 void PhoneBook::add(void)
 {
 	int	recNo;
@@ -41,10 +53,47 @@ void PhoneBook::add(void)
 }
 void PhoneBook::displayHeader(void)
 {
-	std::cout << " ____________________________________________" << std::endl;
-	std::cout
-		<< "|     Index|First Name| Last Name|  Nickname|" << std::endl;
-	std::cout << "|----------|----------|----------|----------|" << std::endl;
+	str header[4] = {"Index", "First Name", "Last Name", "Nick Name"};
+	for (int i = 0; i < 45; i++)
+		std::cout << "\033[34m-";
+	std::cout << "\n";
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << "|";
+		if (header[i].length() <= 10)
+		{
+			for (size_t j = 0; j < 10 - header[i].length(); j++)
+				std::cout << ' ';
+			std::cout << header[i];
+		}
+		else
+		std::cout<<header[i].substr(0,9)<<'.';
+	}
+	std::cout << "|\n";
+	for (int i = 0; i < 45; i++)
+		std::cout << "-";
+	std::cout << "\n";
+}
+
+void PhoneBook::printContactInfo(int index)
+{
+	std::cout << "|" << std::setw(10) << index--;
+	if (this->_contacts[index].getFirstName().length() <= 10)
+		std::cout << "|" << std::setw(10) << this->_contacts[index].getFirstName();
+	else
+		std::cout << "|" <<  this->_contacts[index].getFirstName().substr(0,
+				9) << '.';
+	if (this->_contacts[index].getLastName().length() <= 10)
+		std::cout << "|" << std::setw(10) << this->_contacts[index].getLastName();
+	else
+		std::cout << "|" << this->_contacts[index].getLastName().substr(0,
+				9) << '.';
+	if (this->_contacts[index].getNickName().length() <= 10)
+		std::cout << "|" << std::setw(10) << this->_contacts[index].getNickName();
+	else
+		std::cout << "|" << this->_contacts[index].getNickName().substr(0,
+				9) << '.';
+	std::cout << "|\n";
 }
 
 void PhoneBook::search(void)
@@ -52,25 +101,46 @@ void PhoneBook::search(void)
 	str	index;
 	int	cnt;
 
-	std::cout << "\nEnter the contact number to view  : ";
-	getline(std::cin >> std::ws, index);
-	if (index.length() > 1 || index.compare("0") == 0)
-		std::cout << "\n Invalid Contact Number. Choose from 1 - 8.\n ";
-	else
+    if(_index == 0)
 	{
+		std::cout<<"\033[31mPhoneBook is empty. Please ADD contacts to view.\n\033[0m";
+		return;
+	}
+	while(1){
+		std::cout << "\n\033[33mEnter the contact number to view (Press 0 to exit SEARCH mode):\033[0m";
+		getline(std::cin >> std::ws, index);
+		if(index.compare("0")==0 || std::cin.eof()==true)
+		   {
+			std::cout << "\n\033[34mExiting SEARCH mode\n\033[0m";
+			break;
+		   }
+		if (index.length() > 1 )
+		{
+		std::cout << "\033[31m\n Invalid Index.\n ";
+		if(_index < 8)
+			std::cout << "\n PhoneBook has only "<<_index <<" contact(s) stored"<<std::endl;
+		else
+			std::cout<< "\n PhoneBook has only 8 contacts stored."<<std::endl;
+		}
+		else
+		{
 		cnt = index[0] - '0';
-		std::cout << "\n Index = " << cnt << std::endl;
 		if (cnt > 0 && cnt < 8 && cnt <= _index)
 		{
 			this->displayHeader();
-			std::cout << "|" << std::setw(10) << cnt--;
-			std::cout << "|" << std::setw(10) << this->_contacts[cnt].getFirstName();
-			std::cout << "|" << std::setw(10) << this->_contacts[cnt].getLastName();
-			std::cout << "|" << std::setw(10) << this->_contacts[cnt].getNickName();
-			std::cout << "|\n";
-			std::cout << " -------------------------------------------" << std::endl;
+			this->printContactInfo(cnt);
+			for (int i = 0; i < 45; i++)
+					std::cout << "-";
+			std::cout << std::endl;
 		}
 		else
-			std::cout << "\n The selected index is out of range";
+		{
+		  if(_index < 8)
+			std::cout << "\033[31m\n PhoneBook has only "<<_index <<" contact(s) stored"<<std::endl;
+		 else
+			std::cout<< "\n PhoneBook has only 8 contacts stored. \033[0m\n"<<std::endl;
+		}
+		
 	}
+	}	
 }
