@@ -1,0 +1,35 @@
+In C++, polymorphism refers to the ability of a single function, method, or operator to work in different ways depending on the type of object it is acting upon. There are two major types of polymorphism in C++: Ad-hoc polymorphism and Parametric polymorphism. Let's break them down:
+
+1. Ad-hoc Polymorphism
+Ad-hoc polymorphism is a form of polymorphism where the same function or operator can work with different types, but each type is handled differently. There are two common mechanisms to achieve ad-hoc polymorphism in C++:
+
+a. Function Overloading
+Function overloading allows you to define multiple functions with the same name but different parameter types or number of parameters. The correct function is chosen at compile-time based on the arguments provided.
+Key Characteristics of Ad-hoc Polymorphism:
+Compile-time resolution: The function or operator to call is resolved at compile-time.
+Function or operator overloads: The same name can represent multiple functions or operators, differentiated by the argument types or the number of arguments.
+Used for specific types: Each overloaded function or operator may be specific to particular data types.
+2. Parametric Polymorphism
+Parametric polymorphism (also known as generic programming) allows you to write code that works with any data type without knowing the specific type in advance. This is typically achieved using templates in C++. A template can be used to define functions, classes, or structures that work with any type, making them type-agnostic.
+
+a. Function Templates
+Function templates allow you to define a generic function that can work with any type of argument.
+
+b. Class Templates
+Class templates allow you to define a class that works with any type.
+
+Key Characteristics of Parametric Polymorphism:
+Compile-time resolution: The type is determined at compile-time, but the function or class is generic, not tied to any specific type.
+Templates: C++ templates are used to create parametric polymorphism. A template can be applied to functions, classes, and structs.
+Type-agnostic code: The same code can work for many different types, avoiding code duplication and increasing flexibility.
+
+Summary of Differences:
+Aspect	Ad-hoc Polymorphism	Parametric Polymorphism
+Mechanism	Function overloading, Operator overloading	Templates (functions, classes, etc.)
+Resolution Time	Compile-time (based on type/signature)	Compile-time (based on provided type)
+Code Specificity	Specific to different types (e.g., overloaded functions)	Generic, works with any type
+Usage	Used when you need to have functions/operators that behave differently depending on the type	Used when you want to write a generic function/class that works with any type
+In Summary:
+Ad-hoc polymorphism is about function and operator overloading, where different behaviors are defined for different types.
+Parametric polymorphism is about writing generic code that works for any type using templates, allowing the same function or class to handle any type safely.
+Both forms of polymorphism in C++ help make code more flexible, reusable, and type-safe, but they serve different purposes and are used in different contexts.
